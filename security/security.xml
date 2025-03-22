@@ -1,0 +1,20 @@
+<odoo> 
+  <record id="group_almiyahdjazair_admin" model="res.groups">
+        <field name="name">Administrateur AlMiyahDjazair</field>
+    </record>
+
+    
+<record id="group_gestionnaire_manager" model="res.groups">
+    <field name="name">Responsable </field>
+</record>
+
+
+<record id="group_gestionnaire_agent" model="res.groups">
+    <field name="name">Agent Réclamations</field>
+</record>
+
+
+</odoo> 
+
+
+   
