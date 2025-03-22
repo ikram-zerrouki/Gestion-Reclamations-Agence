@@ -1,0 +1,23 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+reclamation_agent_access,Agent Réclamations,model_reclamation,group_gestionnaire_agent,1,1,1,0
+equipe_manager_access,Manager Équipe,model_equipe,group_gestionnaire_manager,1,1,1,1
+equipe_agent_access,Agent Équipe,model_equipe,group_gestionnaire_agent,1,0,0,0
+
+
+
+deplacement_agent_access,Agent Déplacement,model_deplacement,group_gestionnaire_agent,1,0,0,0
+deplacement_manager_access,Manager Déplacement,model_deplacement,group_gestionnaire_manager,1,1,1,1
+deplacement_admin_access,Admin Déplacement,model_deplacement,group_almiyahdjazair_admin,1,1,1,1
+deplacement_read_all,Déplacement all,model_deplacement,,1,1,1,1
+
+
+
+
+reclamation_manager,reclamation manager,model_reclamation,group_almiyahdjazair_admin,1,1,1,1
+reclamation_read_all,reclamation all,model_reclamation,,1,1,1,1
+
+
+equipe_read_all,equipe all,model_equipe,,1,1,1,1
+
+
+traitement_read_all,traitement all,model_traitement,,1,1,1,1
