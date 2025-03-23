@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="seq_reclamation" model="ir.sequence">
+        <field name="name">Réclamation Sequence</field>
+        <field name="code">reclamation</field>
+        <field name="prefix">RECL</field>
+        <field name="padding">3</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- Form View -->
+    <record model="ir.ui.view" id="reclamation_form_view">
+      <field name="name">reclamation.form</field>
+       <field name="model">reclamation</field>
+      <field name="arch" type="xml">
+        <form string="Réclamation Form" confirm_discard="true">
+            <sheet>
+                <group>
+                  <group string="Réclamation">
+                      <!-- Ajoutez ID AGENCEEEE -->
+                    <field name="name" />
+                    <field name="date"/>
+                    <field name="objet"/>
+                    <field name="description"/>
+                    <field name="source_reclamation" string="Mode de réception" />
+
+                  </group>
+
+                  <group string="Informations du Réclamant">
+                    <field name="reclamant_name" string="Nom du réclamant"/>
+                    <field name="reclamant_phone" string="Téléphone"/>
+                    <field name="reclamant_email" string="Email"/>
+                    <field name="reclamant_address" string="Adresse"/>
+                    <field name="reclamant_commune" string="Commune"/>
+                    <field name="reclamant_type" string="Type de réclamant"/>
+
+                  </group>
+                </group>
+
+                <!-- Champs spécifiques à l'entreprise 
+                <group string="Informations de l'entreprise">
+                   <field name="reclamant_phone" options="{'invisible': [('reclamant_type', '!=', 'entreprise')]}"/>
+                    <field name="entreprise_phone" string="Téléphone de l'entreprise"/>
+                    <field name="entreprise_address" string="Adresse de l'entreprise"/>
+                </group>  -->
+
+
+                <notebook>
+                    <page string="Informations supplémentaires">
+                        <group>
+                            <field name="urgence" string="Urgent ?"/>
+                            <field name="type_reclamation" string="Type de réclamation"/>
+                            <field name="etat" string="État de la réclamation"/>
+                            <field name="notes_internes" string="Notes internes"/>
+                        </group>
+                    </page>
+                    <page string="Source de la Réclamation">
+                        <group>
+                            <field name="source_media" string="Source" />
+                            <field name="details_media" string="Détails" />
+                        </group>
+                    </page>
+                </notebook>
+
+                <!-- Agence -->
+                
+            </sheet>
+        </form>
+       </field>
+    </record>
+
+
+
+    <!-- Tree View -->
+    <record model="ir.ui.view" id="reclamation_tree_view">
+        <field name="name">reclamation.tree</field>
+        <field name="model">reclamation</field>
+        <field name="arch" type="xml">
+            <tree string="Liste des Réclamations">
+                <field name="name" string="ID"/>
+                <field name="date" string="Date"/>
+                <field name="objet" string="Objet"/>
+                <field name="reclamant_name" string="Réclamant"/>
+                <field name="type_reclamation" string="Type"/>
+                <field name="urgence" string="Urgent ?"/>
+                <field name="etat" string="État"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- Search View -->
+    <record model="ir.ui.view" id="reclamation_search_view">
+        <field name="name">reclamation.search</field>
+        <field name="model">reclamation</field>
+        <field name="arch" type="xml">
+            <search string="Recherche Réclamation">
+                <field name="name" string="ID"/>
+                <field name="date" string="Date"/>
+                <field name="objet" string="Objet"/>
+                <field name="reclamant_name" string="Réclamant"/>
+                <field name="type_reclamation" string="Type"/>
+                <field name="etat" string="État"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record model="ir.actions.act_window" id="reclamation_list_action">
+        <field name="name">Réclamations</field>
+        <field name="res_model">reclamation</field>
+        <field name="view_mode">tree,form</field>
+       
+        <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+               Aucunes réclamations trouvé! 
+        </p>
+
+         <p> 
+         Créez la première Réclamation     
+        </p>
+
+       </field>
+    </record>
+
+
+
+    <!-- Window Action TRAITEMENT ******************************************************* -->
+
+
+
+    <record model="ir.ui.view" id="view_traitement_form">
+      <field name="name">traitement.form</field>
+      <field name="model">traitement</field>
+      <field name="arch" type="xml">
+        <form string="Traitement de Réclamation">
+            <sheet>
+                <group>
+                    <group string="Informations Générales">
+                        <field name="name" string="Nom du traitement" required="1"/>
+                        <field name="reclamation_id" string="Réclamation associée" required="1"/>
+                        <field name="equipe_id" string="Équipe assignée"/>
+                        <field name="etat_traitement" string="État du traitement"/>
+                    </group>
+                    <group string="Dates">
+                        <field name="date_debut" string="Date de début" required="1"/>
+                        <field name="date_fin" string="Date de fin prévue"/>
+                        <field name="date_cloture" string="Date de clôture réelle"/>
+                    </group>
+                </group>
+
+                <notebook>
+                    <page string="Détails du Traitement">
+                        <group>
+                            <field name="actions_requises" string="Actions requises"/>
+                            <field name="notes_internes" string="Notes internes"/>
+
+
+                            <field name="deplacement_ids">
+                                <tree editable="bottom">
+                                    <field name="name" string="Nom du déplacement"/>
+                                    <field name="date_deplacement" widget="Date" required="1"/>
+                                    <field name="actions_realisees" string="Actions réalisées lors du déplacement"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="name" string="Nom du déplacement"/>
+                                        <field name="date_deplacement" widget="Date" required="1"/>
+                                        <field name="actions_realisees" string="Actions réalisées lors du déplacement"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </group>
+                    </page>
+                    <page string="Procès-Verbal">
+                        <group>
+                            <field name="pv_text" string="Contenu du PV"/>
+                                 <!-- fichier pv
+                             <field name="pv_fichier" string="Document du PV" filename="name"/>  -->
+                              <!-- Ajout du bouton pour générer le PV -->
+                            <!--<button name="action_generate_pv" string="Générer PV" type="object" class="btn-primary"/> 
+                            -->
+                        </group>
+                    </page>
+                    
+                </notebook>
+            </sheet>
+        </form>
+       </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="traitement_tree_view">
+      <field name="name">traitement.tree</field>
+      <field name="model">traitement</field>
+      <field name="arch" type="xml">
+        <tree string="Liste des Traitements">
+            <field name="name" string="Nom du traitement"/>
+            <field name="reclamation_id" string="Réclamation"/>
+            <field name="equipe_id" string="Équipe assignée"/>
+            <field name="etat_traitement" string="État"/>
+            <field name="date_debut" string="Date de début"/>
+            <field name="date_fin" string="Date de fin prévue"/>
+        </tree>
+      </field>
+    </record>
+
+
+    
+
+    <record model="ir.actions.act_window" id="traitement_list_action">
+      <field name="name">Traitements</field>
+      <field name="res_model">traitement</field>
+       <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+            Aucun traitement disponible !
+        </p>
+
+        <p>
+            Cliquez pour ajouter un nouveau traitement.
+        </p>
+       </field>
+    </record>
+
+
+
+    
+
+    <!-- Equipe Form View *********************************************************** -->
+
+    <record model="ir.ui.view" id="view_equipe_form">
+        <field name="name">equipe.form</field>
+        <field name="model">equipe</field>
+        <field name="arch" type="xml">
+            <form string="Équipe de Réclamation">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="type_equipe"/>
+                        <field name="reclamation_id"/>
+                        <field name="membres_ids"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record model="ir.ui.view" id="view_equipe_tree">
+        <field name="name">equipe.tree</field>
+        <field name="model">equipe</field>
+        <field name="arch" type="xml">
+            <tree string="Liste des Équipes">
+                <field name="name"/>
+                <field name="type_equipe"/>
+                <field name="reclamation_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="equipe_list_action">
+        <field name="name">Equipes</field>
+        <field name="res_model">equipe</field>
+        <field name="view_mode">tree,form</field>
+       
+    </record>
+
+
+    <!-- Gestionnaire *****************************************
+
+<record id="view_gestionnaire_reclamation_form" model="ir.ui.view">
+    <field name="name">gestionnaire.form</field>
+    <field name="model">gestionnaire</field>
+    <field name="arch" type="xml">
+        <form string="Gestionnaire de Réclamation">
+            <sheet>
+                <group>
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="role"/>
+                    <field name="active"/>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+     
+
+
+<record id="view_gestionnaire_tree" model="ir.ui.view">
+    <field name="name">gestionnaire.tree</field>
+    <field name="model">gestionnaire</field>
+    <field name="arch" type="xml">
+        <tree string="Liste des Gestionnaires">
+            <field name="name"/>
+            <field name="email"/>
+            <field name="role"/>
+        </tree>
+    </field>
+</record>
+
+
+ <record id="action_gestionnaire_reclamation" model="ir.actions.act_window">
+    <field name="name">Gestionnaires</field>
+    <field name="res_model">gestionnaire</field>
+    <field name="view_mode">kanban,tree,form</field> 
+    <field name="view_id" ref="view_gestionnaire_kanban"/>  
+</record>   -->
+
+
+
+    <!-- Menu Items -->
+    <menuitem id="main_almiyahdjazair_menu" name="AlMiyah Djazair"/>
+    <menuitem id="Djazair_menu_reclamations" name="Gestion des Réclamations" parent="main_almiyahdjazair_menu"/>
+    <menuitem id="Djazair_menu_traitement" name="Traitement des réclamations" parent="main_almiyahdjazair_menu"/>
+
+    <!-- Gestion des réclamations -->
+    <menuitem id="reclamations_menu" name="Réclamations" parent="Djazair_menu_reclamations" action="reclamation_list_action"/>
+
+    <!-- Traitement des réclamations -->
+    <menuitem id="menu_traitement" name="Traitement" parent="Djazair_menu_traitement" action="traitement_list_action"/>
+    
+    <!-- Menu des Équipes -->
+    <menuitem id="menu_equipe" name="Equipes" parent="Djazair_menu_traitement" action="equipe_list_action"/>
+
+</odoo> 
