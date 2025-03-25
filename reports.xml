@@ -1,0 +1,139 @@
+<odoo>
+    <record id="report_reclamation" model="ir.actions.report">
+        <field name="name">Rapport de Réclamation</field>
+        <field name="model">reclamation</field>
+        <field name="report_type">qweb-pdf</field>
+       <field name="report_name">AlMiyah-Djazair-gestion.report_reclamation_view</field>
+        <field name="report_file">djazair.report_reclamation</field>
+        <field name="binding_model_id" ref="model_reclamation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_reclamation_view">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <h2>Rapport de Reclamation</h2>
+                <p><strong>Num de Reclamation:</strong> <t t-esc="doc.name"/></p>
+                <p><strong>Date de Reclamation:</strong> <t t-esc="doc.date"/></p>
+                <p><strong>Objet:</strong> <t t-esc="doc.objet"/></p>
+                <p><strong>Description:</strong> <t t-esc="doc.description"/></p>
+                <p><strong>Nom du Reclamant:</strong> <t t-esc="doc.reclamant_name "/></p>
+                <p><strong>Adresse:</strong> <t t-esc="reclamant_address"/></p>
+                <p><strong>Telephone:</strong> <t t-esc="doc.reclamant_phone"/></p>
+            </t>
+        </t>
+    </template>
+<!-- *** 
+    <template id="report_treatment_pv">
+    <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Procès-Verbal de Traitement de Réclamation</h2>
+                <p><strong>Réclamation :</strong> <span t-field="doc.reclamation_id.name"/></p>
+                <p><strong>Équipe assignée :</strong> <span t-field="doc.equipe_id.name"/></p>
+                <p><strong>Actions requises :</strong> <span t-field="doc.actions_requises"/></p>
+                <p><strong>Notes internes :</strong> <span t-field="doc.notes_internes"/></p>
+                <p><strong>Contenu du PV :</strong> <span t-field="doc.pv_text"/></p>
+            </div>
+        </t>
+    </t>
+</template>
+<record id="action_report_traitement_pv" model="ir.actions.report">
+    <field name="name">Procès-Verbal</field>
+    <field name="model">traitement</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">AlMiyah-Djazair-gestion.report_treatment_pv_view</field>
+    <field name="report_file">djazair.report_treatment_pv</field>
+    <!<field name="print_report_name">'PV_' + object.reclamation_id.name</field>
+    <field name="binding_model_id" ref="model_traitement"/>
+        <field name="binding_type">report</field>
+</record> -->
+
+ <!-- Rapport Procès-Verbal -->
+    <!--<template id="report_treatment_pv_view">
+        <t t-call="web.html_container">
+            <div class="page">
+                <h2>Procès-Verbal de Traitement de Réclamation</h2>
+                <p><strong>Réclamation :</strong> <t t-esc="doc.reclamation_id.name"/></p>
+                <p><strong>Équipe assignée :</strong> <t t-esc="doc.equipe_id.name"/></p>
+                <p><strong>Contenu du PV :</strong> <t t-esc="doc.pv_text"/></p>
+                <p><strong>Notes internes :</strong> <t t-esc="doc.notes_internes"/></p>
+                <p><strong>Actions requises :</strong> <t t-esc="doc.actions_requises"/></p>
+                <p><strong>Date de début :</strong> <t t-esc="doc.date_debut"/></p>
+                <p><strong>Date de fin :</strong> <t t-esc="doc.date_fin"/></p>
+                <p><strong>Date de clôture :</strong> <t t-esc="doc.date_cloture"/></p>
+                <p><strong>Date de génération du PV :</strong> <t t-esc="fields.Date.today()"/></p>
+            </div>
+        </t>
+    </template>-->
+    
+
+
+    <!-- Définition de l'action de rapport pour le PV -->
+    <!--<record id="action_report_traitement_pv" model="ir.actions.report">
+        <field name="name">Procès-Verbal</field>
+        <field name="model">traitement</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">AlMiyah-Djazair.report_treatment_pv_view</field>
+        <field name="report_file">AlMiyah-Djazair.report_treatment_pv</field>
+        <field name="binding_model_id" ref="model_traitement"/>
+        <field name="binding_type">report</field>
+    </record>-->
+     <!-- Rapport Procès-Verbal -->
+    <record id="action_report_traitement_pv" model="ir.actions.report">
+        <field name="name">Génerer PV </field>
+        <field name="model">traitement</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">AlMiyah-Djazair.report_treatment_pv_view</field>
+        <field name="binding_model_id" ref="model_traitement"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_treatment_pv_view">
+        <t t-call="web.html_container">
+           <t t-foreach="docs" t-as="doc">
+                <h2 style="text-align: center; font-size: 24px; text-decoration: underline;">
+                     PV traitement
+                </h2>
+                <p><strong>Nom du traitement : </strong><t t-esc="doc.name"/></p>
+                <p><strong>Reclamation concernee : </strong><t t-esc="doc.reclamation_id.name"/></p>
+                <p><strong>Equipe assignee : </strong><t t-esc="doc.equipe_id.name" /></p>
+                <p><strong>Date de debut : </strong><t t-esc="doc.date_debut"/></p>
+                <p><strong>Date de fin prevue : </strong><t t-esc="doc.date_fin"/></p>
+                <p><strong>Date de cloture reelle : </strong><t t-esc="doc.date_cloture"/></p>
+                <p><strong>Etat Actuel du traitement : </strong><t t-esc="doc.etat_traitement"/></p>
+                <p><strong>Actions requises : </strong><t t-esc="doc.actions_requises" /></p>
+                <br/>
+                <p><strong>Contenu du PV : </strong><t t-esc="doc.pv_text" /></p>
+                <br/><br/><br/><br/><br/><br/>
+                <!-- Signatures -->
+                    <p><strong>Signatures des membres du comite concernee :</strong></p>
+                    
+
+                        <!-- Footer contenant le nom de l'entreprise et l'espace pour signatures -->
+                <div style="position: absolute; bottom: 20px; width: 100%; text-align: center; font-size: 24px;">
+                    <p><strong>AlMiyah-Djazair</strong></p>
+                    <p style="border-top: 1px solid black; width: 50%; margin: 0 auto; padding-top: 10px;"></p>
+                
+
+                    
+
+                    </div>
+
+
+
+            </t>
+        </t>
+
+                
+    </template>
+
+
+
+
+
+
+
+    
+
+</odoo>
